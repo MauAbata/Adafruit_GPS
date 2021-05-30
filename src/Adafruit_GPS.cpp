@@ -145,14 +145,18 @@ static bool strStartsWith(const char *str, const char *prefix);
     @returns True on successful hardware init, False on failure
 */
 /**************************************************************************/
-bool Adafruit_GPS::begin(uint32_t baud_or_i2caddr) {
+bool Adafruit_GPS::begin(uint32_t baud_or_i2caddr, uint32_t rxPin, uint32_t txPin) {
 #if (defined(__AVR__) || defined(ESP8266)) && defined(USE_SW_SERIAL)
   if (gpsSwSerial) {
     gpsSwSerial->begin(baud_or_i2caddr);
   }
 #endif
   if (gpsHwSerial) {
+#ifdef ESP32
+    gpsHwSerial->begin(baud_or_i2caddr, SERIAL_8N1, rxPin, txPin);
+#else
     gpsHwSerial->begin(baud_or_i2caddr);
+#endif
   }
   if (gpsI2C) {
     gpsI2C->begin();
