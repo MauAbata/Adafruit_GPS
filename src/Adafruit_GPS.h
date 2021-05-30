@@ -81,7 +81,7 @@ typedef enum {
 class Adafruit_GPS : public Print {
 public:
   // Adafruit_GPS.cpp
-  bool begin(uint32_t baud_or_i2caddr);
+  bool begin(uint32_t baud_or_i2caddr, uint32_t rxPin = -1, uint32_t txPin = -1);
 
 #if (defined(__AVR__) || defined(ESP8266)) && defined(USE_SW_SERIAL)
   Adafruit_GPS(SoftwareSerial *ser); // Constructor when using SoftwareSerial
